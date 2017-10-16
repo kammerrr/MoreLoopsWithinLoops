@@ -3,21 +3,21 @@ This project demonstrates NESTED LOOPS (i.e., loops within loops)
 in the context of SEQUENCES OF SUB-SEQUENCES.
 
 Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Rylan Kammerer.
+"""  # TO DO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 
 def main():
     """ Calls the other functions to test them. """
-    run_test_largest_number()
-    run_test_largest_negative_number()
+    #run_test_largest_number()
+    #run_test_largest_negative_number()
     run_test_first_is_elsewhere_too()
 
 
 def run_test_largest_number():
     """ Tests the    largest_number    function. """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement this TEST function.
+    # TO DO: 2. Implement this TEST function.
     #   It TESTS the  largest_number  function defined below.
     #   Include at least ** 1 ** ADDITIONAL test beyond those we wrote.
     # ------------------------------------------------------------------
@@ -45,6 +45,10 @@ def run_test_largest_number():
 
     # TO DO 2 (continued): Add your ADDITIONAL test(s) here:
 
+    # Test 3:
+    expected = 9
+    answer = largest_number( [[2, 3, 4], [9, 8, 7], [1]])
+    print('Expected and actual are:', expected, answer)
 
 def largest_number(seq_seq):
     """
@@ -72,15 +76,35 @@ def largest_number(seq_seq):
     where each subsequence contains only numbers.
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # TO DO: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # ------------------------------------------------------------------
+    big = 0
+    new_list = []
+    for k in range(len(seq_seq)):
+        for j in range(len(seq_seq[k])):
+            new_list += [seq_seq[k][j]]
+    r = new_list.count(None)
+
+    for t in range(r):
+        new_list.remove(None)
+    if len(new_list) == 0:
+        return None
+
+    elif len(new_list) == 1:
+        big =new_list[0]
+    for l in range(len(new_list)):
+        if len(new_list) == 0:
+            big = None
+        elif new_list[l] > big:
+            big = new_list[l]
+    return big
 
 
 def run_test_largest_negative_number():
     """ Tests the    largest_negative_number    function. """
     # ------------------------------------------------------------------
-    # TODO: 4. Implement this TEST function.
+    # TO DO: 4. Implement this TEST function.
     #   It TESTS the  largest_negative_number  function defined below.
     #
     #   Include enough tests to give you confidence that your solution
@@ -90,6 +114,21 @@ def run_test_largest_negative_number():
     print('-------------------------------------------------')
     print('Testing the   LARGEST_NEGATIVE_NUMBER   function:')
     print('-------------------------------------------------')
+    expected = -1
+    actual = largest_negative_number([[-1],[0],[1]])
+    print('Expected and actual are: ', expected, actual)
+
+    expected = -1
+    actual = largest_negative_number([[-1,-2,-3], [0,1], [10]])
+    print('Expected and actual are: ', expected, actual)
+
+    expected = -3
+    actual = largest_negative_number([[-13, -20, -3], [30, 1], [10]])
+    print('Expected and actual are: ', expected, actual)
+
+    expected = None
+    actual = largest_negative_number([[13, 20, 3], [30, 1], [10]])
+    print('Expected and actual are: ', expected, actual)
 
 
 def largest_negative_number(seq_seq):
@@ -115,13 +154,26 @@ def largest_negative_number(seq_seq):
     where each subsequence contains only numbers.
     """
     # ------------------------------------------------------------------
-    # TODO: 5. Implement and test this function.
+    # TO DO: 5. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     #
     # CHALLENGE: Try to solve this problem with no additional sequences
     #   being constructed (so the SPACE allowed is limited to the
     #   give sequence of sequences plus any non-list variables you want).
     # ------------------------------------------------------------------
+    new_list = []
+    for k in range(len(seq_seq)):
+        for j in range(len(seq_seq[k])):
+            if seq_seq[k][j] < 0:
+                new_list += [seq_seq[k][j]]
+    new_list.sort()
+    new_list.reverse()
+    for l in range(len(new_list) -1):
+        new_list.pop()
+    if len(new_list) == 1:
+        return new_list[0]
+    else:
+        return None
 
 
 def run_test_first_is_elsewhere_too():
@@ -355,7 +407,7 @@ def first_is_elsewhere_too(seq_seq):
     and the given argument is a sequence of sequences.
     """
     # ------------------------------------------------------------------
-    # TODO: 6. Implement and test this function.
+    # TO DO: 6. Implement and test this function.
     #          Some tests are already written for you (above).
     #
     # IMPLEMENTATION RESTRICTION:
@@ -371,6 +423,12 @@ def first_is_elsewhere_too(seq_seq):
     #   practice at loops within loops (within loops within ...)
     # ------------------------------------------------------------------
 
+    for k in range(len(seq_seq[0])):
+        for j in range(1, len(seq_seq)):
+            for l in range(len(seq_seq[j])):
+                if seq_seq[0][k] == seq_seq[j][l]:
+                    return True
+    return False
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
